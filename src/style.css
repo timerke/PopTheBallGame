@@ -1,0 +1,136 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html, body {
+    background-color: #8de89c;
+	height: 100%;
+}
+
+.wrapper {
+	position: relative;
+	min-height: 100%;
+}
+
+.content {
+	box-sizing: border-box;
+	min-height: 100%;
+	padding-bottom: 90px;
+    text-align: center;
+}
+
+.header {
+    margin: 40px auto;
+    text-align: center;
+}
+
+.header a {
+    color: #4e4e4e;
+    font-size: 50px;
+    font-weight: 100;
+    text-decoration: none;
+}
+
+.header a:hover {
+    color: #292929;
+}
+
+.header a:active {
+    color: black;
+}
+
+.footer {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 80px;
+}
+
+/*Стиль для игрового поля*/
+div#game_field {
+    background-color: tomato;
+    height: 500px;
+    width: 70%;
+    float: left;
+    position: relative;
+    margin: 0 auto;
+}
+
+/*Стиль полей со счетом и кнопкой слева и справа от игрового поля*/
+div.field {
+    background-color: teal;
+    height: 500px;
+    width: 15%;
+    position: relative;
+}
+
+/*Стиль поля со счетом слева от игрового поля*/
+div#left_field {
+    float: left;
+}
+
+/*Стиль поля с кнопкой справа от игрового поля*/
+div#right_field {
+    float: right;
+}
+
+#left_field h2 {
+    color: #292929;
+    font-size: 40px;
+    font-weight: 100;
+    margin: 70px auto 30px;
+}
+
+/*Стиль для текста в абзацах*/
+p {
+    font-size: 30px;
+    font-weight: 100;
+}
+
+/*Стиль для количества лопнутых шариков*/
+span#score {
+    color: blue;
+}
+
+/*Стиль для количества пропущенных шариков*/
+span#losses {
+    color: red;
+}
+
+/*Стиль для шариков*/
+div.ball {
+    border: black solid 1px;
+    border-radius: 50%;
+    opacity: 0.5;
+    position: absolute;
+}
+
+/*Стиль для иголки*/
+div.needle {
+    background-color: #292929;
+    border: #292929 solid 1px;
+    position: absolute;
+}
+
+/*Стиль для кнопок*/
+button {
+    padding: 15px 15px;
+    color: #333;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid #666;
+    font-size: 20px;
+    font-weight: 100;
+    margin: 80px auto;
+}
+
+button:hover {
+    background-color: #666;
+}
+
+button:active {
+    background-color: #4e4e4e;
+}
