@@ -58,6 +58,13 @@ div#game_field {
     margin: 0 auto;
 }
 
+#game_field h2 {
+    color: #292929;
+    font-size: 50px;
+    font-weight: 100;
+    margin: 50px auto;
+}
+
 /*Стиль полей со счетом и кнопкой слева и справа от игрового поля*/
 div.field {
     background-color: teal;

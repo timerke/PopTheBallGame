@@ -72,7 +72,7 @@ class Game {
      */
     create_ball() {
         // Задаем следующий вызов и создание шарика через случайное время
-        let dt = get_random_number(100, 2000);
+        let dt = get_random_number(10 + this.time, 100 + this.time * this.time);
         clearTimeout(this.timer_ball_creation_id);
         this.timer_ball_creation_id = setTimeout(this.create_ball.bind(this), dt);
         // Создаем шарик
@@ -108,7 +108,7 @@ class Game {
             let is_inside = this.balls[i].move(this.DT / 1000);
             // Проверяем, пересекаются ли шарик и иголки
             let is_intersection = false;
-            if (is_inside) {
+            if (is_inside && this.needle) {
                 let [x_left, x_right, y] = this.needle.get_xy();
                 is_intersection = this.balls[i].check_intersection(x_left, x_right, y);
                 if (is_intersection) {
@@ -128,6 +128,14 @@ class Game {
         }
         // Обнуляем ветер
         this.wind.set_to_zero();
+        // Проверяем, остались ли шарики и время
+        if (this.balls.length == 0 && this.time <= 0) {
+            // Время игры закончилось, шариков больше нет
+            clearInterval(this.timer_motion_id);
+            this.field.innerHTML =
+                `<h2>Количество лопнутых шаров ${this.score}</h2>` +
+                `<h2>Количество пропущенных шаров ${this.losses}</h2>`;
+        }
     }
 
     /**
@@ -135,7 +143,7 @@ class Game {
      */
     run() {
         // Запускаем счетчик времени
-        this.time = 0;
+        this.time = 60;
         this.timer_id = setInterval(this.run_time.bind(this), 1000);
         // Создаем иголку
         let height = this.field.clientHeight;
@@ -164,13 +172,14 @@ class Game {
      * через каждую 1 с.
      */
     run_time() {
-        this.time += 1;
+        this.time -= 1;
         this.timer.innerText = this.time;
         // Если в игре прошло больше 60 сек, то останавливаем игру
-        if (this.time >= 60) {
+        if (this.time <= 0) {
             clearInterval(this.timer_id);
             clearTimeout(this.timer_ball_creation_id);
-            clearTimeout(this.timer_motion_id);
+            this.needle.remove();
+            this.needle = null;
         }
     }
 
@@ -279,7 +288,10 @@ class Ball {
      * @param dt: интервал времени, который прошел с предыдущего вызова.
      */
     move(dt) {
-        this.x += this.v_x * dt;
+        // Учитываем, что шарик не может улететь за левую или правую границу
+        let x_new = this.x + this.v_x * dt;
+        if (0 <= x_new - this.r && x_new + this.r < this.x_max)
+            this.x = x_new;
         this.y += this.v_y * dt;
         this.set_position(this.x, this.y);
         return this.check_inside();
@@ -341,6 +353,13 @@ class Needle {
         else if (e.key == 'ArrowRight')
             this.x += DX;
         this.set_position(this.x, this.y);
+    }
+
+    /**
+     * Метод убирает иголку.
+     */
+    remove() {
+        document.getElementsByClassName('needle')[0].remove();
     }
 
     /**
